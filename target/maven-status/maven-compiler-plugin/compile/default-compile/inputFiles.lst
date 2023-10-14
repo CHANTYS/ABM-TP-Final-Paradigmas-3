@@ -1,0 +1,7 @@
+/Users/hchanampe/workspaces/paradigmas3/patterndao/src/main/java/ar/edu/unlar/paradigmas/patterndao/Patterndao.java
+/Users/hchanampe/workspaces/paradigmas3/patterndao/src/main/java/ar/edu/unlar/paradigmas/patterndao/objects/Cliente.java
+/Users/hchanampe/workspaces/paradigmas3/patterndao/src/main/java/ar/edu/unlar/paradigmas/patterndao/objects/EnumSexo.java
+/Users/hchanampe/workspaces/paradigmas3/patterndao/src/main/java/ar/edu/unlar/paradigmas/patterndao/objects/EnumEstadoCivil.java
+/Users/hchanampe/workspaces/paradigmas3/patterndao/src/main/java/ar/edu/unlar/paradigmas/patterndao/controllers/ClienteController.java
+/Users/hchanampe/workspaces/paradigmas3/patterndao/src/main/java/ar/edu/unlar/paradigmas/patterndao/utils/ConnectionDB.java
+/Users/hchanampe/workspaces/paradigmas3/patterndao/src/main/java/ar/edu/unlar/paradigmas/patterndao/controllers/ICrud.java
