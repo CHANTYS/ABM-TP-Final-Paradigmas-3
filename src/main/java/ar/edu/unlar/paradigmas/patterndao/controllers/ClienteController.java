@@ -5,8 +5,6 @@
 package ar.edu.unlar.paradigmas.patterndao.controllers;
 
 import ar.edu.unlar.paradigmas.patterndao.objects.Cliente;
-import ar.edu.unlar.paradigmas.patterndao.objects.EnumEstadoCivil;
-import ar.edu.unlar.paradigmas.patterndao.objects.EnumSexo;
 import ar.edu.unlar.paradigmas.patterndao.utils.ConnectionDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,14 +34,14 @@ public class ClienteController implements ICrud<Cliente>{
     @Override
     public boolean insertObject(Cliente entity) {
         
-        String SQL_INSERT = "insert into clientes (nombre, apellido, sexo, estado_civil, documento) values (?,?,?,?,?);";
+        String SQL_INSERT = "insert into clientes (nombre, apellido, documento, sexo, estado_civil) values (?,?,?,?,?);";
         try {
             PreparedStatement prepareStatement = conn.prepareStatement(SQL_INSERT);
             prepareStatement.setString(1, entity.getNombre());
             prepareStatement.setString(2, entity.getApellido());
-            prepareStatement.setString(3, entity.getSexo().toString());
-            prepareStatement.setString(4, entity.getEstadoCivil().toString());
-            prepareStatement.setString(5, entity.getDocumento());
+            prepareStatement.setString(3, entity.getDocumento());
+            prepareStatement.setString(4, entity.getSexo().name());
+            prepareStatement.setString(5, entity.getEstadoCivil().name());
             prepareStatement.executeUpdate();
                         
         } catch (SQLException ex) {

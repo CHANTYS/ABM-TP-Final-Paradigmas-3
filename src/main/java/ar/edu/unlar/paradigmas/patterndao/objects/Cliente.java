@@ -71,10 +71,18 @@ public class Cliente {
         if(value != null){
             this.estadoCivil = EnumEstadoCivil.valueOf(value);
            
+        }
+    }
+        
+    public void setSexo(String value){
+        if(value != null){
+            this.sexo = EnumSexo.valueOf(value);
+           
+        }
+        
     }
        
         
-    }
     
     
     
