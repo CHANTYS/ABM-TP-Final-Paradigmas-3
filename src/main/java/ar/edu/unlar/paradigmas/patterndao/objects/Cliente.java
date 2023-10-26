@@ -9,11 +9,21 @@ package ar.edu.unlar.paradigmas.patterndao.objects;
  * @author hchanampe
  */
 public class Cliente {
+    private Integer id;
     private String nombre;
     private String apellido;
     private String documento;
     private EnumSexo sexo;
     private EnumEstadoCivil estadoCivil;
+    private TipoCliente tipoCliente;
+
+    public TipoCliente getTipoCliente() {
+        return tipoCliente;
+    }
+
+    public void setTipoCliente(TipoCliente tipoCliente) {
+        this.tipoCliente = tipoCliente;
+    }
 
     public Cliente(String nombre, String apellido, String documento, EnumSexo sexo, EnumEstadoCivil estadoCivil) {
         this.nombre = nombre;
@@ -28,6 +38,14 @@ public class Cliente {
     
     public String getNombre() {
         return nombre;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
     
     public void setNombre(String nombre) {

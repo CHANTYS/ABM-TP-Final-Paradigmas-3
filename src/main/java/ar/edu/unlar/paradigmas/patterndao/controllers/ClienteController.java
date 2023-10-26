@@ -5,6 +5,7 @@
 package ar.edu.unlar.paradigmas.patterndao.controllers;
 
 import ar.edu.unlar.paradigmas.patterndao.objects.Cliente;
+import ar.edu.unlar.paradigmas.patterndao.objects.TipoCliente;
 import ar.edu.unlar.paradigmas.patterndao.utils.ConnectionDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,7 +35,7 @@ public class ClienteController implements ICrud<Cliente>{
     @Override
     public boolean insertObject(Cliente entity) {
         
-        String SQL_INSERT = "insert into clientes (nombre, apellido, documento, sexo, estado_civil) values (?,?,?,?,?);";
+        String SQL_INSERT = "insert into clientes (nombre, apellido, documento, sexo, estado_civil, tipo_cliente_id) values (?,?,?,?,?,?);";
         try {
             PreparedStatement prepareStatement = conn.prepareStatement(SQL_INSERT);
             prepareStatement.setString(1, entity.getNombre());
@@ -42,6 +43,7 @@ public class ClienteController implements ICrud<Cliente>{
             prepareStatement.setString(3, entity.getDocumento());
             prepareStatement.setString(4, entity.getSexo().name());
             prepareStatement.setString(5, entity.getEstadoCivil().name());
+            prepareStatement.setInt(6, entity.getTipoCliente().getId());
             prepareStatement.executeUpdate();
                         
         } catch (SQLException ex) {
@@ -53,19 +55,67 @@ public class ClienteController implements ICrud<Cliente>{
 
     @Override
     public boolean deleteObject(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String SQL_DELETE = "DELETE * FROM clientes WHERE id=?";
+        
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(SQL_DELETE);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, "no se puedo guardar los datos", ex);
+            return false;
+        }
+        
+        return true;
     }
 
     @Override
     public Optional<Cliente> getObject(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String SQL_QUERY_OBJECT = "SELECT * FROM clientes WHERE id=?";
+        
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(SQL_QUERY_OBJECT);
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+            
+            while(rs.next()){
+            
+                Cliente cliente = new Cliente();
+                TipoClienteController tipoClienteController = new TipoClienteController();
+                Optional<TipoCliente> tipoCliente = tipoClienteController.getObject(rs.getInt("tipo_cliente_id"));
+                
+                
+                cliente.setApellido(rs.getString("apellido"));
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setDocumento(rs.getString("documento"));
+                cliente.setSexo(rs.getString("sexo"));
+                cliente.setEstadoCivil(rs.getString("estado_civil"));
+                cliente.setId(rs.getInt("id"));
+                
+                if(tipoCliente.isPresent())
+                    cliente.setTipoCliente(tipoCliente.get());
+
+                return Optional.of(cliente);
+   
+            }
+           
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, "no se puedo guardar los datos", ex);
+            
+        }
+        
+            return null;
+
     }
+    
 
     @Override
     public boolean modifiedObject(Cliente entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    
     @Override
     public List<Cliente> getAllObjects() {
         String SQL_LIST = "select * from clientes;";
