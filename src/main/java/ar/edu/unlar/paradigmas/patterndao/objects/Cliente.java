@@ -69,7 +69,7 @@ public class Cliente {
     }
 
     public EnumSexo getSexo() {
-        return sexo;
+        return this.sexo;
     }
 
     public void setSexo(EnumSexo sexo) {

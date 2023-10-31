@@ -129,12 +129,15 @@ public class ClienteController implements ICrud<Cliente>{
             while(rs.next()){
             
                 Cliente filaCliente = new Cliente();
+                TipoCliente tipoCliente;
+                Integer tipo_cliente_id;
                 
                 filaCliente.setApellido(rs.getString("apellido"));
                 filaCliente.setNombre(rs.getString("nombre"));
                 filaCliente.setDocumento(rs.getString("Documento"));
-
+                filaCliente.setId(rs.getInt("id_cliente"));
                 filaCliente.setEstadoCivil(rs.getString("estado_civil"));
+                filaCliente.setSexo(rs.getString("sexo"));
                 
                 listadoClientes.add(filaCliente);
             
