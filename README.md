@@ -13,5 +13,5 @@ También se deberá agregar un CRUD de Clientes, para lo cual se necesitara hace
     * precio
     * cantidad
 
-Agregar al modelo soporte ventas de uno o mas artículos(Maestro - Detalle)
+* Agregar al modelo soporte ventas de uno o mas artículos(Maestro - Detalle)
 
