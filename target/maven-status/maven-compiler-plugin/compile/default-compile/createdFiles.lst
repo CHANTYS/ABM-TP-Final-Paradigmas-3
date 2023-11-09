@@ -1,7 +1,7 @@
-ar/edu/unlar/paradigmas/patterndao/objects/EnumEstadoCivil.class
-ar/edu/unlar/paradigmas/patterndao/objects/Cliente.class
-ar/edu/unlar/paradigmas/patterndao/objects/EnumSexo.class
-ar/edu/unlar/paradigmas/patterndao/utils/ConnectionDB.class
-ar/edu/unlar/paradigmas/patterndao/Patterndao.class
-ar/edu/unlar/paradigmas/patterndao/controllers/ICrud.class
-ar/edu/unlar/paradigmas/patterndao/controllers/ClienteController.class
+ar\edu\unlar\paradigmas\patterndao\controllers\ClienteController.class
+ar\edu\unlar\paradigmas\patterndao\controllers\ICrud.class
+ar\edu\unlar\paradigmas\patterndao\objects\EnumSexo.class
+ar\edu\unlar\paradigmas\patterndao\Patterndao.class
+ar\edu\unlar\paradigmas\patterndao\objects\EnumEstadoCivil.class
+ar\edu\unlar\paradigmas\patterndao\objects\Cliente.class
+ar\edu\unlar\paradigmas\patterndao\utils\ConnectionDB.class

@@ -11,5 +11,21 @@ package ar.edu.unlar.paradigmas.patterndao.objects;
 public class ItemVenta {
     private Producto producto;
     private Float cantidad;
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    public Float getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Float cantidad) {
+        this.cantidad = cantidad;
+    }
     
 }
