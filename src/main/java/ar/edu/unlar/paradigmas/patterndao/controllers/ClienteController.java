@@ -22,19 +22,17 @@ import java.util.logging.Logger;
  *
  * @author hchanampe
  */
-public class ClienteController implements ICrud<Cliente>{
-    
+public class ClienteController implements ICrud<Cliente> {
+
     private Connection conn;
 
     public ClienteController() throws SQLException, ClassNotFoundException {
         this.conn = ConnectionDB.obtenerConexion();
     }
 
-            
-          
     @Override
     public boolean insertObject(Cliente entity) {
-        
+
         String SQL_INSERT = "insert into clientes (nombre, apellido, documento, sexo, estado_civil, tipo_cliente_id) values (?,?,?,?,?,?);";
         try {
             PreparedStatement prepareStatement = conn.prepareStatement(SQL_INSERT);
@@ -45,18 +43,18 @@ public class ClienteController implements ICrud<Cliente>{
             prepareStatement.setString(5, entity.getEstadoCivil().name());
             prepareStatement.setInt(6, entity.getTipoCliente().getId());
             prepareStatement.executeUpdate();
-                        
+
         } catch (SQLException ex) {
             Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, "no se puedo guardar los datos", ex);
         }
-        
+
         return true;
     }
 
     @Override
     public boolean deleteObject(int id) {
         String SQL_DELETE = "DELETE * FROM clientes WHERE id=?";
-        
+
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(SQL_DELETE);
             preparedStatement.setInt(1, id);
@@ -65,93 +63,104 @@ public class ClienteController implements ICrud<Cliente>{
             Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, "no se puedo guardar los datos", ex);
             return false;
         }
-        
+
         return true;
     }
 
     @Override
     public Optional<Cliente> getObject(int id) {
         String SQL_QUERY_OBJECT = "SELECT * FROM clientes WHERE id=?";
-        
+
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(SQL_QUERY_OBJECT);
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            
-            while(rs.next()){
-            
+
+            while (rs.next()) {
+
                 Cliente cliente = new Cliente();
                 TipoClienteController tipoClienteController = new TipoClienteController();
                 Optional<TipoCliente> tipoCliente = tipoClienteController.getObject(rs.getInt("tipo_cliente_id"));
-                
-                
+
                 cliente.setApellido(rs.getString("apellido"));
                 cliente.setNombre(rs.getString("nombre"));
                 cliente.setDocumento(rs.getString("documento"));
                 cliente.setSexo(rs.getString("sexo"));
                 cliente.setEstadoCivil(rs.getString("estado_civil"));
                 cliente.setId(rs.getInt("id"));
-                
-                if(tipoCliente.isPresent())
+
+                if (tipoCliente.isPresent()) {
                     cliente.setTipoCliente(tipoCliente.get());
+                }
 
                 return Optional.of(cliente);
-   
+
             }
-           
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, "no se puedo guardar los datos", ex);
-            
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-            return null;
+
+        return null;
 
     }
-    
 
     @Override
     public boolean modifiedObject(Cliente entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String SQL_UPDATE = "UPDATE clientes SET nombre=?, apellido=?, documento=?, sexo=?, estado_civil=?, tipo_cliente_id=? WHERE id=?";
+        try {
+            PreparedStatement prepareStatement = conn.prepareStatement(SQL_UPDATE);
+            prepareStatement.setString(1, entity.getNombre());
+            prepareStatement.setString(2, entity.getApellido());
+            prepareStatement.setString(3, entity.getDocumento());
+            prepareStatement.setString(4, entity.getSexo().name());
+            prepareStatement.setString(5, entity.getEstadoCivil().name());
+            prepareStatement.setInt(6, entity.getTipoCliente().getId());
+            prepareStatement.setInt(7, entity.getId());
+            prepareStatement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, "no se puedo modificar los datos", ex);
+            return false;
+        }
+        return true;
     }
 
-    
     @Override
     public List<Cliente> getAllObjects() {
         String SQL_LIST = "select * from clientes;";
-        
+
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(SQL_LIST);
-            
-            List<Cliente> listadoClientes= new ArrayList<>();
-            
-            while(rs.next()){
-            
+
+            List<Cliente> listadoClientes = new ArrayList<>();
+
+            while (rs.next()) {
+
                 Cliente filaCliente = new Cliente();
                 TipoCliente tipoCliente;
                 Integer tipo_cliente_id;
-                
+
                 filaCliente.setApellido(rs.getString("apellido"));
                 filaCliente.setNombre(rs.getString("nombre"));
                 filaCliente.setDocumento(rs.getString("Documento"));
                 filaCliente.setId(rs.getInt("id_cliente"));
                 filaCliente.setEstadoCivil(rs.getString("estado_civil"));
                 filaCliente.setSexo(rs.getString("sexo"));
-                
+
                 listadoClientes.add(filaCliente);
-            
+
             }
             return listadoClientes;
-                    
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return null;
     }
-
-
 
 }
